@@ -12,7 +12,9 @@ bash enable_pwm.sh
 # Robot Movements
 
 Driver choice:
+<img src="https://images-na.ssl-images-amazon.com/images/I/61OiJgvqwsL._AC_SL1001_.jpg" alt="Drivers" width="300"/>
  - 2x L298N Dual H Bridge Motor Controller Board [link](https://www.amazon.ca/gp/product/B0786L5YPP/ref=ppx_yo_dt_b_asin_title_o05_s00?ie=UTF8&psc=1)
+
 
 Motors:
  - Motor1: Rear axle - brushed DC motor. [PWM controlled - pin 32]
