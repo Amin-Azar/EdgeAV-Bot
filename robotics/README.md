@@ -19,7 +19,7 @@ Motors:
  - Motor2: Front axle - brushed DC motor. [PWM controlled - pin 33]
  - Motor3: Steering - brushed DC motor. [ON/OFF =(L/R)]
 
-![Motors](../resources/bot-buttom.jpg =250x)
+<img src="../resources/bot-buttom.jpg" alt="Motors" width="250"/>
 ![Pins](../resources/bot-pin.jpg)
 
 
