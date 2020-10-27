@@ -1,3 +1,4 @@
+import time
 import RPi.GPIO as GPIO
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
@@ -8,7 +9,7 @@ class Motor():
     enable_is_pwm = False
     pwm = None
     speed = 0
-    def __init__(self, direction_pins, enable_pin=None, enable_is_pwm=False):
+    def __init__(self, direction_pins, enable_pin=None, enable_is_pwm=False, duration=None):
         # Direction
         self.direction_pins = direction_pins # [35,36]
         GPIO.setup(self.direction_pins[0],GPIO.OUT,initial=GPIO.LOW)
@@ -30,6 +31,7 @@ class Motor():
             #else: assume an always ENABLE driver channel.
         # initiaize motors to stop
         self.release()
+
 
     def set_pins(self, pin0=GPIO.LOW, pin1=GPIO.LOW):
         GPIO.output(self.direction_pins[0],pin0)
@@ -68,33 +70,33 @@ class Robot():
         self.rear_motor  = Motor([29,31], 32, enable_is_pwm=True)
         self.front_motor = Motor([35,36], 33, enable_is_pwm=True)
         self.steer_motor = Motor([37,38]) #40
-        self.release_all()
+        self.release()
     def forward(self, speed=1.0):
         # release steer
         self.rear_motor.CW(speed)
-        self.rear_motor.CW(speed)
+        self.front_motor.CW(speed)
         self.steer_motor.release()
     def forward_l(self, speed=1.0):
         self.rear_motor.CW(speed)
-        self.rear_motor.CW(speed)
-        self.steer_motor.CW()
+        self.front_motor.CW(speed)
+        self.steer_motor.CCW()
     def forward_r(self, speed=1.0):
         self.rear_motor.CW(speed)
-        self.rear_motor.CW(speed)
-        self.steer_motor.CCW()
+        self.front_motor.CW(speed)
+        self.steer_motor.CW()
     def backward(self, speed=1.0):
         # release steer
         self.rear_motor.CCW(speed)
-        self.rear_motor.CCW(speed)
+        self.front_motor.CCW(speed)
         self.steer_motor.release()
     def backward_l(self, speed=1.0):
         self.rear_motor.CCW(speed)
-        self.rear_motor.CCW(speed)
-        self.steer_motor.CW()
+        self.front_motor.CCW(speed)
+        self.steer_motor.CCW()
     def backward_r(self, speed=1.0):
         self.rear_motor.CCW(speed)
-        self.rear_motor.CCW(speed)
-        self.steer_motor.CCW()
+        self.front_motor.CCW(speed)
+        self.steer_motor.CW()
     def stop(self):
         # LOCK rear & front
         self.rear_motor.stop()
@@ -105,3 +107,52 @@ class Robot():
         self.rear_motor.release()
         self.front_motor.release()
         self.steer_motor.release()
+
+
+def test_robot():
+    #--------------
+    time.sleep(3)
+    R = Robot()
+    #--------------
+    R.forward(-0.6)
+    time.sleep(0.25)
+    #--------------
+    R.forward_l(-0.6)
+    time.sleep(0.25)
+    #--------------
+    R.forward_r(-0.6)
+    time.sleep(0.5)
+    #--------------
+    R.release()
+    time.sleep(2)
+    #--------------
+    R.backward(1)
+    time.sleep(1)
+    #--------------
+    R.backward_l(0)
+    time.sleep(0.5)
+    #--------------
+    R.backward_r(0)
+    time.sleep(0.5)
+    #--------------
+    R.stop()
+    #--------------
+
+def test_robot_straight():
+    #--------------
+    time.sleep(3)
+    R = Robot()
+    #--------------
+    R.forward(0)
+    time.sleep(1)
+    #--------------
+    R.release()
+    time.sleep(2)
+    #--------------
+    R.backward(0)
+    time.sleep(1)
+    #--------------
+    R.stop()
+    #--------------
+    
+    
