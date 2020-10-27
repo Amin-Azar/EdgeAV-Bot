@@ -155,4 +155,68 @@ def test_robot_straight():
     R.stop()
     #--------------
     
-    
+
+def test_robot_90():
+    #--------------
+    time.sleep(3)
+    R = Robot()
+    #--------------
+    for i in range(0,3):
+        R.forward_r(0.25)
+        time.sleep(1)
+        #--------------
+        R.release()
+        time.sleep(1)
+        #--------------
+        R.backward_l(0.5)
+        time.sleep(1)
+        #--------------
+        R.release()
+        time.sleep(1)
+    #--------------
+    R.stop()
+    #--------------
+
+def test_robot_tight_90():
+    #--------------
+    time.sleep(3)
+    R = Robot()
+    #--------------
+    for i in range(0,5):
+        R.forward_r(0.25)
+        time.sleep(0.75)
+        #--------------
+        R.release()
+        time.sleep(0.25)
+        #--------------
+        R.backward_l(0.5)
+        time.sleep(0.75)
+        #--------------
+        R.release()
+        time.sleep(0.25)
+        #--------------
+    #--------------
+    R.stop()
+    #--------------
+
+def test_robot_tight_180():
+    #--------------
+    time.sleep(3)
+    R = Robot()
+    #--------------
+    for i in range(0,12):
+        R.forward_r(0.25)
+        time.sleep(0.75)
+        #--------------
+        R.release()
+        time.sleep(0.25)
+        #--------------
+        R.backward_l(0.5)
+        time.sleep(0.75)
+        #--------------
+        R.release()
+        time.sleep(0.25)
+        #--------------
+    #--------------
+    R.stop()
+    #--------------
