@@ -15,7 +15,7 @@ class Motor():
         GPIO.setup(self.direction_pins[1],GPIO.OUT,initial=GPIO.LOW)
         # PWM (if any)
         self.enable_is_pwm = enable_is_pwm
-        if enable_is_pwm:
+        if self.enable_is_pwm:
             if enable_pin not in [32,33]:
                 raise "Jetson's pwm pins are #32 and #33 !!"
             self.enable_pin = enable_pin # 32
@@ -34,19 +34,20 @@ class Motor():
     def set_pins(self, pin0=GPIO.LOW, pin1=GPIO.LOW):
         GPIO.output(self.direction_pins[0],pin0)
         GPIO.output(self.direction_pins[1],pin1)
-    def set_speed(seld, speed=0):
+    def set_speed(self, speed=0):
         self.speed = ((speed - (-1))/2)*100
-        if enable_is_pwm:
+        if self.enable_is_pwm:
             self.pwm.ChangeDutyCycle(self.speed)
         else:
-            if speed == 0:
-                GPIO.output(self.enable_pin,GPIO.LOW) # OFF
-            else:
-                GPIO.output(self.enable_pin,GPIO.HIGH) # ON
-    def CW(self, speed):
+            if self.enable_pin:
+                if speed == 0:
+                    GPIO.output(self.enable_pin,GPIO.LOW) # OFF
+                else:
+                    GPIO.output(self.enable_pin,GPIO.HIGH) # ON
+    def CW(self, speed=1):
         self.set_pins(GPIO.HIGH, GPIO.LOW)
         self.set_speed(speed)
-    def CCW(self, speed):
+    def CCW(self, speed=1):
         self.set_pins(GPIO.LOW, GPIO.HIGH)
         self.set_speed(speed)
     def stop(self, speed=0):
@@ -64,9 +65,9 @@ class Robot():
     def __init__(self, *args, **kwargs):
         super(Robot, self).__init__(*args, **kwargs)
         # initialize motors and pins
-        self.rear_motor  = Motor([35,36], 32)
-        self.front_motor = Motor([37,38], 33)
-        self.steer_motor = Motor([31,39])
+        self.rear_motor  = Motor([29,31], 32, enable_is_pwm=True)
+        self.front_motor = Motor([35,36], 33, enable_is_pwm=True)
+        self.steer_motor = Motor([37,38]) #40
         self.release_all()
     def forward(self, speed=1.0):
         # release steer
@@ -94,12 +95,12 @@ class Robot():
         self.rear_motor.CCW(speed)
         self.rear_motor.CCW(speed)
         self.steer_motor.CCW()
-    def stop_all(self):
+    def stop(self):
         # LOCK rear & front
         self.rear_motor.stop()
         self.front_motor.stop()
         self.steer_motor.release()
-    def release_all(self):
+    def release(self):
         # enable = 0
         self.rear_motor.release()
         self.front_motor.release()
