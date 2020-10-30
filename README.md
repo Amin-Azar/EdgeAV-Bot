@@ -17,6 +17,8 @@ These optimizations will be done with the goal of reducing latency, improving th
 ## Design Constraints
 
 **Cost**: The lower the better. The total cost consists of sensors (ultrasound, camera, ...), interfaces (motor driver, voltage level converter), the brain (Jetson Nano), power source (batteries), and the mechanical part (the car body) which is around $300.
+We should mention that the cost of an autonomous vehicle is a complex function influenced by not only the cost of the vehicle itself, but also other costs including maintaining the cloud services.
+
 
 **Latency** The end-to-end time between when a new event happened/sensed and when the robot reacted must be short enough to avoid hitting objects. This is not very critical in our case is the speed of the car is very low but is a big factor in larger vehicles.
 
@@ -26,7 +28,9 @@ These optimizations will be done with the goal of reducing latency, improving th
 
 **Quality** For the purpose of this project, course-grained information such as depth, or slightly reduced model accuracy can be acceptable. Therefore, when we see huge savings in terms of the energy/latency, we might trade off the accuracy, otherwise, the goal is to maintain the accuracies as much as possible.
 
-**Security & Safety** Again, this is not that of a concern here as the data being collected from public areas and are not sensitive in the nature; this means that we can send it to the cloud to process. Similarly, the car is running at low speeds and don't carry/can not harm anything, so having a sophisticated is not justifiable. Having said there, we design a mechanism to override the robot movements when sensors detect something that is in contrast with perception modules.
+**Security & Safety** Again, this is not that of a concern here as the data is collected from public areas and are not sensitive in the nature; this means that we can send it to the cloud to process. 
+Similarly, the car is running at low speeds and don't carry/can not harm anything, so having a sophisticated is not justifiable.
+Having said there, we design a mechanism to override the robot movements when sensors detect something that is in contrast with perception modules. So, as long as the latency of the system is acceptable and the models produce the correct results, we meet our goal here.
  
 
 ## Considerations
@@ -35,6 +39,6 @@ Some things to note:
 - **Optimizing the Inference:** Our goal is to perform an inference task more efficiently. Training can technically happen on the Edge device as well, but due to its limited resource, we will rely on powerful servers to perform this task;
 - **Optimizing the pre-trained models** Model optimizations such as pruning and quantization, usually needs a retraining/fine-tuning phase to recover the accuracy drop right after the optimization is done on a pre-trained model. There exist methods that can train a sparse/quantized model from scratch but we won't target that in this case.
 - **Simplyifing vs computing:** Whenever possible, we will try to simplify or replace the computation and if not, optimize it. For example, if we can measure the depth with a simple sensor, our preference is to remove/reduce the load from the compute unit (to infer dept from the camera image) and just use sensor data. Similarly, if a task can be accomplished by a non-DNN solution with an acceptable accuracy loss, we might target that (e.g. e classic ELAS algorithm [1].) " In cases where sensing could replace computing, accelerating the computing algorithm has little value." [1]
-- **HW acceleration** FPGA acceleration is needed (and cool) and if we identify a good use case and have time to do so, we will go that way, but we will majorly rely on accelerating things on the GPU using CUDA when possible.
+- **HW acceleration** FPGA acceleration with its unique capabilites such as partial reconfiguration, is a suitable (and cool) candidate for offloading ML workloads and if we identify a good use case and have time to do so, we will go that way, but we will majorly rely on accelerating things on the GPU using CUDA when possible.
 
 [1] [Building the Computing System for Autonomous Micromobility Vehicles: Design Constraints and Architectural Optimizations](https://www.microarch.org/micro53/papers/738300b067.pdf)
