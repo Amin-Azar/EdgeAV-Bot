@@ -18,18 +18,13 @@ These optimizations will be done with the goal of reducing latency, improving th
 
 ## Design Constraints
 
-**Cost**: The lower the better. The total cost consists of sensors (ultrasound, camera, ...), interfaces (motor driver, voltage level converter), the brain (Jetson Nano), power source (batteries), and the mechanical part (the car body) which is around $300.
+- **Cost**: The lower the better. The total cost consists of sensors (ultrasound, camera, ...), interfaces (motor driver, voltage level converter), the brain (Jetson Nano), power source (batteries), and the mechanical part (the car body) which is around $300.
 We should mention that the cost of an autonomous vehicle is a complex function influenced by not only the cost of the vehicle itself but also other costs including maintaining the cloud services.
-
-**Latency** The end-to-end time between when a new event happened/sensed and when the robot reacted must be short enough to avoid hitting objects. This is not very critical in our case is the speed of the car is very low but is a big factor in larger vehicles.
-
-**Throughput** This indicates how often we can feed the robot with new commands and control it. [4] says a 10Hz throughput is well above what humans drivers manipulate the vehicle. The classical way of dealing with this is pipelining if possible.
-
-**Energy** Energy translates to the range of the robot. It cannot easily be extended with more battery as more battery means more weights and putting more pressure on motors. We estimated the average power consumption of modules under the load to be 15Wh (or 3A-5V the board + peripheral) and the motors at max speed to be 25Wh. We chose a 20,000mah battery to power the compute logic for 6 hours and keep the original battery to drive the motors which should give us up to 1h under mid load.
-
-**Quality** For the purpose of this project, course-grained information such as depth, or slightly reduced model accuracy can be acceptable. Therefore, when we see huge savings in terms of the energy/latency, we might trade off the accuracy, otherwise, the goal is to maintain the accuracies as much as possible.
-
-**Security & Safety** Again, this is not that of a concern here as the data is collected from public areas and are not sensitive in nature; this means that we can send it to the cloud to process. 
+- **Latency** The end-to-end time between when a new event happened/sensed and when the robot reacted must be short enough to avoid hitting objects. This is not very critical in our case is the speed of the car is very low but is a big factor in larger vehicles.
+- **Throughput** This indicates how often we can feed the robot with new commands and control it. [4] says a 10Hz throughput is well above what humans drivers manipulate the vehicle. The classical way of dealing with this is pipelining if possible.
+- **Energy** Energy translates to the range of the robot. It cannot easily be extended with more battery as more battery means more weights and putting more pressure on motors. We estimated the average power consumption of modules under the load to be 15Wh (or 3A-5V the board + peripheral) and the motors at max speed to be 25Wh. We chose a 20,000mah battery to power the compute logic for 6 hours and keep the original battery to drive the motors which should give us up to 1h under mid load.
+- **Quality** For the purpose of this project, course-grained information such as depth, or slightly reduced model accuracy can be acceptable. Therefore, when we see huge savings in terms of the energy/latency, we might trade off the accuracy, otherwise, the goal is to maintain the accuracies as much as possible.
+- **Security & Safety** Again, this is not that of a concern here as the data is collected from public areas and are not sensitive in nature; this means that we can send it to the cloud to process. 
 Similarly, the car is running at low speeds and don't carry/can not harm anything, so having a sophisticated is not justifiable.
 Having said there, we design a mechanism to override the robot movements when sensors detect something that is in contrast with perception modules. So, as long as the latency of the system is acceptable and the models produce the correct results, we meet our goal here.
 
