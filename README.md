@@ -46,10 +46,15 @@ The National Highway Trafic Safety Authority released a guideline for autonomous
 ## Some use cases
 
 This platform can be expanded to help micro transit. Usually, due to the very low number of users in the micro-transit section [(compare)](https://transitforwardri.com/pdf/Strategy%20Paper%2015%20First%20Mile%20Last%20Mile.pdf), the cost per trip is considerably higher than other methods. Bringing autonomy there can potentially help reduce the cost of the ride.
+
+## References
+
 [1] [Procrustes: a Dataflow and Accelerator for Sparse Deep Neural Network Training](https://arxiv.org/abs/2009.10976)
 
 [2] [Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference](https://openaccess.thecvf.com/content_cvpr_2018/papers/Jacob_Quantization_and_Training_CVPR_2018_paper.pdf)
 
 [3] [Deep Compression: Compressing Deep Neural Networks with Pruning, Trained Quantization, and Huffman Coding](https://arxiv.org/abs/1510.00149)
+
 [4] [Building the Computing System for Autonomous Micro mobility Vehicles: Design Constraints and Architectural Optimizations](https://www.microarch.org/micro53/papers/738300b067.pdf)
+
 [5] [The Architectural Implications of Autonomous Driving: Constraints and Acceleration](https://web.eecs.umich.edu/~shihclin/papers/AutonomousCar-ASPLOS18.pdf)
