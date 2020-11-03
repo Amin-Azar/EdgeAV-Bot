@@ -24,3 +24,6 @@ Motors:
 <img src="../resources/bot-pin.jpg" alt="Pins" width="300"/>
 
 
+# Note
+
+The JetBot from Nvidia, is a differential drive robot which uses 2 Left and Right motors (no Steering Motor) !
