@@ -12,7 +12,7 @@ bash enable_pwm.sh
 # Robot Movements
 
 Driver choice:
- - 2x L298N Dual H Bridge Motor Controller Board [link](https://www.amazon.ca/gp/product/B0786L5YPP/ref=ppx_yo_dt_b_asin_title_o05_s00?ie=UTF8&psc=1)
+ - 2x L298N Dual H Bridge Motor Controller Board [link](https://www.amazon.ca/gp/product/B0786L5YPP/ref=ppx_yo_dt_b_asin_title_o05_s00?ie=UTF8&psc=1). Each can drve 2 motors and as we are using 3 motors, we need 2 of these modules. (Although we could connect the back and front motors to the same channel, we decided to keep them separate for more flexibility).
 <img src="https://images-na.ssl-images-amazon.com/images/I/61OiJgvqwsL._AC_SL1001_.jpg" alt="Drivers" width="300"/>
 
 Motors:
